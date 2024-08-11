@@ -8,6 +8,7 @@ This project implements a real-time system to classify emotions based on physiol
 The project is composed of multiple Python scripts, each serving a specific function in the data collection, processing, and emotion classification pipeline.
 
 1. client.py
+
 Purpose: 
 Initiates a UDP connection to the server to send and receive physiological data.
 
@@ -16,6 +17,7 @@ Connects to the server, which receives real-time physiological signals from the 
 Sends a predefined message to verify the connection. 
 
 2. server.py
+
 Purpose: Acts as a server to receive physiological data from the EmotiBit device via UDP.
 Functionality:
 Receives ECG and GSR signals from the EmotiBit device.
@@ -23,21 +25,22 @@ Logs data into CSV files for further analysis.
 The script is a base version, which can be extended to include more complex data processing tasks or forwarding data to machine learning models for real-time analysis. 
 
 3. ML_models.py
+
 Purpose: Implements machine learning models for emotion classification based on the physiological data.
 Functionality:
 The script includes six classic machine learning classifiers:
 
-Support Vector Machine (SVM)
+   Support Vector Machine (SVM)
 
-Random Forest
+   Random Forest
 
-Stochastic Gradient Descent (SGD) Classifier
+   Stochastic Gradient Descent (SGD) Classifier
 
-K-Nearest Neighbors (KNN)
+   K-Nearest Neighbors (KNN)
 
-Gradient Boosting Classifier
+   Gradient Boosting Classifier
 
-Logistic Regression
+   Logistic Regression
 
 Models are trained, tested, and validated on the data, providing performance metrics such as F1 score, precision, recall, and others.
 
