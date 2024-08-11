@@ -5,13 +5,21 @@ Project Overview:
 The project is composed of multiple Python scripts, each serving a specific function in the data collection, processing, and emotion classification pipeline.
 
 1. client.py
+
 Purpose: Initiates a UDP connection to the server to send and receive physiological data.
+
 Functionality:
+
 Connects to the server, which receives real-time physiological signals from the EmotiBit device.
+
 Sends a predefined message to verify the connection.
+
 2. server.py
+
 Purpose: Acts as a server to receive physiological data from the EmotiBit device via UDP.
+
 Functionality:
+
 Receives ECG and GSR signals from the EmotiBit device.
 Logs data into CSV files for further analysis.
 The script is a base version, which can be extended to include more complex data processing tasks or forwarding data to machine learning models for real-time analysis.
