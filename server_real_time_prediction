@@ -1,0 +1,63 @@
+import socket
+import joblib
+import numpy as np
+
+# Load the pre-trained models and scaler
+scaler = joblib.load('scaler.pkl')
+rf_clf = joblib.load('randomforest_model.pkl')
+sgd_clf = joblib.load('sgdclassifier_model.pkl')
+svc_clf = joblib.load('svc_model.pkl')
+knn_clf = joblib.load('knn_model.pkl')
+gb_clf = joblib.load('gradientboosting_model.pkl')
+lr_clf = joblib.load('logisticregression_model.pkl')
+
+# Server setup
+UDP_IP = "127.0.0.1"
+UDP_PORT = 12346
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind((UDP_IP, UDP_PORT))
+
+def predict_emotion(features):
+    # Apply the same preprocessing as during training
+    features_scaled = scaler.transform(np.array(features).reshape(1, -1))
+    
+    # Predict with each model
+    rf_pred = rf_clf.predict(features_scaled)[0]
+    sgd_pred = sgd_clf.predict(features_scaled)[0]
+    svc_pred = svc_clf.predict(features_scaled)[0]
+    knn_pred = knn_clf.predict(features_scaled)[0]
+    gb_pred = gb_clf.predict(features_scaled)[0]
+    lr_pred = lr_clf.predict(features_scaled)[0]
+    
+    return {
+        "RandomForest": rf_pred,
+        "SGD": sgd_pred,
+        "SVC": svc_pred,
+        "KNN": knn_pred,
+        "Gradient Boosting": gb_pred,
+        "Logistic Regression": lr_pred
+    }
+
+print("Listening for real-time data to make predictions...")
+
+while True:
+    data, addr = sock.recvfrom(1024)
+    DS = data.decode('utf-8').strip()
+    tags = DS.split(',')
+    
+    if len(tags) > 6:
+        if tags[3] == 'HR':
+            hr = float(tags[6])
+        elif tags[3] == 'EA':
+            ea = float(tags[6])
+        elif tags[3] == 'BI':
+            bi = float(tags[6])
+        
+        if 'hr' in locals() and 'ea' in locals() and 'bi' in locals():
+            features = [hr, ea, bi]  # Features to be fed into the model
+            predictions = predict_emotion(features)
+            
+            print(f"Received features: {features}")
+            for model_name, prediction in predictions.items():
+                print(f"{model_name} Prediction: {prediction}")
