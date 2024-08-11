@@ -1,6 +1,7 @@
 This project implements a real-time system to classify emotions based on physiological signals collected from the EmotiBit device. The system establishes a UDP connection to receive ECG (Electrocardiography) and GSR (Galvanic Skin Response) data, processes the data using various machine learning classifiers, and predicts emotions based on these inputs.
 
-Project Overview
+Project Overview: 
+
 The project is composed of multiple Python scripts, each serving a specific function in the data collection, processing, and emotion classification pipeline.
 
 1. client.py
